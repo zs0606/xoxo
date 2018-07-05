@@ -1,24 +1,35 @@
 import {Map} from 'immutable'
 import { createStore } from 'redux';
 
+//actions
 const MOVE = 'MOVE'
 
+//action creators
 export const move =  (player, position)=>{
   return {
     type: MOVE,
-    position: position,
-    player: player
+    board: position,
+    turn: player
   };
 }
 
-const initialState= {position:[], player: 'X'};
+//toggle Player
+const togglePlayer = (currentPlayer) => {
+  if (currentPlayer === "X") {
+    return "O"
+  }
+  return "X";
+}
 
-export default function reducer(state = initialState, action) {
+const initialState= {board:[0,0], turn: 'X'};
+
+export default function gameReducer(state = initialState, action) {
   switch (action.type){
     case MOVE:
-    return {position: action.position, player: action.player}
+    return {board: action.position, turn: togglePlayer(action.turn)}
     default:
     return state
   }
 }
+
 
