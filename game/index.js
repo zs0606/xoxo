@@ -8,8 +8,8 @@ const MOVE = 'MOVE'
 export const move =  (player, position)=>{
   return {
     type: MOVE,
-    board: position,
-    turn: player
+    position: position,
+    player: player
   };
 }
 
@@ -21,12 +21,15 @@ const togglePlayer = (currentPlayer) => {
   return "X";
 }
 
-const initialState= {board:[0,0], turn: 'X'};
+const initialState= {
+  board:Map(),
+   turn: 'X'
+ };
 
 export default function gameReducer(state = initialState, action) {
   switch (action.type){
     case MOVE:
-    return {board: action.position, turn: togglePlayer(action.turn)}
+    return {board: state.board.setIn(action.position, action.player), turn: togglePlayer(action.player)}
     default:
     return state
   }
